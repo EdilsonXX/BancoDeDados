@@ -139,6 +139,7 @@ create table Servico(
   select * from Servico;
   select * from Funcionario;
   select * from Itens_OS;
+  select * from telefone;
   
   create index IDX_IDSERVICO ON SERVICO(idServico);
   
@@ -170,6 +171,46 @@ VALUES
   ("Bo Mccullough","62969852985",1,4),
   ("Neville Tillman","23665258887",3,8),
   ("Blaze Bean","71646743855",2,2);
+  
+  INSERT INTO Cliente (nomeCliente,cpfCliente,idEndereco)
+VALUES
+  ("Maryam Mcmillan","71212481967",1),
+  ("Ima Copeland","44968777499",3),
+  ("Mari Myers","54781884441",3),
+  ("Shelby Benjamin","32273266655",5),
+  ("Amity Bright","94314425143",6);
+
+INSERT INTO Servico (nomeServico,recursos)
+VALUES
+  ("pede nec","pellentesque eget, dictum placerat, augue. Sed molestie. Sed"),
+  ("In","libero at auctor ullamcorper,"),
+  ("ac, feugiat non, lobortis quis, pede. Suspendisse dui. Fusce diam","cursus"),
+  ("sit amet","orci luctus et ultrices posuere cubilia Curae Phasellus ornare."),
+  ("sem molestie sodales. Mauris blandit","tortor nibh sit amet orci. Ut");
+
+INSERT INTO OS (dataSolicitacao,dataPrevisao,resposta,idFuncionario,idDepartamento,idCliente )
+VALUES
+  ("63714339","68568638","vulputate dui, nec tempus mauris",3,8,3),
+  ("66928233","15227233","in, hendrerit consectetuer, cursus et,",1,5,3),
+  ("75142961","81581474","mauris. Integer sem elit, pharetra",5,8,3),
+  ("77788279","47282552","at, iaculis quis, pede. Praesent",3,3,3),
+  ("35654241","86656326","Cras lorem lorem, luctus ut, pellentesque eget,",1,9,5);
+  
+  INSERT INTO Telefone (operadora,numero,idFuncionario,idCliente )
+VALUES
+  ("84","6534936343",2,3),
+  ("98","5295364689",4,3),
+  ("68","5446766432",5,1),
+  ("79","7856558287",5,1),
+  ("58","8564359987",4,2);
+
+INSERT INTO Itens_OS (idServico,idOS)
+VALUES
+  (2,3),
+  (4,3),
+  (5,1),
+  (3,1),
+  (4,2);
 
   
   INSERT INTO Empresa (nomeEmpresa, tipo) values ("Conecta", "Matriz");
