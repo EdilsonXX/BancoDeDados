@@ -130,6 +130,10 @@ create table Servico(
    select a.nomeFuncionario, b.nomeDepartamento, c.pais, c.estado, c.cidade, c.bairro, c.rua from Funcionario a, Departamento b, Endereco c WHERE a.idDepartamento = b.idDepartamento and a.idEndereco = c.idEndereco;
    select d.nomeFuncionario, e.dataSolicitacao, e.dataPrevisao, e.resposta from Funcionario d, OS e WHERE e.idFuncionario = d.idFuncionario;
    
+   select s.nomeServico, d.nomeDepartamento, o.resposta from Servico s INNER JOIN ITENS_OS i ON (i.idServico = s.idServico) INNER JOIN OS o ON (o.idOS = i.idOS) INNER JOIN Departamento d ON (d.idDepartamento = o.idDepartamento) and d.idDepartamento = 1;  
+   select s.nomeServico, f.nomeFuncionario from Servico s INNER JOIN ITENS_OS i ON (i.idServico = s.idServico) INNER JOIN OS o ON (o.idOS = i.idOS) INNER JOIN Funcionario f ON (f.idFuncionario = o.idFuncionario);  
+   select s.nomeServico, c.nomeCliente from Servico s INNER JOIN ITENS_OS i ON (i.idServico = s.idServico) INNER JOIN OS o ON (o.idOS = i.idOS) INNER JOIN Cliente c ON (c.idCliente = o.idCliente);  
+   
   select * from endereco;
   select * from departamento;
   select * from empresa;
