@@ -111,6 +111,9 @@ create table Agendar_Livros(
   select * from Agendamento;
   select * from Agendar_Livros;
   
+  select count(nomeFuncionario) FROM Funcionario;
+  select nomeCliente as Clientezinho FROM Cliente ;
+  
   select a.respostaAgendamento, a.dataSolicitacaoAgendamento, a.dataEntregaAgendamento, f.nomeFuncionario, f.cpfFuncionario, c.nomeCliente, c.cpfCliente, l.nomeLivro From Livro l INNER Join Agendar_Livros g ON (l.idLivro = g.idLivro) INNER JOIN Agendamento a ON (g.idAgendamento = a.idAgendamento) INNER JOIN Funcionario f ON (a.idFuncionario = f.idFuncionario) INNER JOIN Cliente c ON (a.idCliente = c.idCliente);
  
    INSERT INTO Biblioteca (nomeBiblioteca,estadoBiblioteca,cidadeBiblioteca, bairroBiblioteca, ruaBiblioteca)
