@@ -115,8 +115,42 @@ create table Agendar_Livros(
   select count(nomeFuncionario) AS Quantidade_Funcionario FROM Funcionario;
   select idFuncionario, count(*) AS Quantidade_Funcionario FROM Agendamento GROUP BY idFuncionario;
   select nomeCliente as Clientezinho FROM Cliente ;
-  
   select a.respostaAgendamento, a.dataSolicitacaoAgendamento, a.dataEntregaAgendamento, f.nomeFuncionario, f.cpfFuncionario, c.nomeCliente, c.cpfCliente, l.nomeLivro From Livro l INNER Join Agendar_Livros g ON (l.idLivro = g.idLivro) INNER JOIN Agendamento a ON (g.idAgendamento = a.idAgendamento) INNER JOIN Funcionario f ON (a.idFuncionario = f.idFuncionario) INNER JOIN Cliente c ON (a.idCliente = c.idCliente);
+  
+  select c.nomeCliente, (select COUNT(a.idCliente) from Agendamento a, Funcionario f where a.idFuncionario = f.idFuncionario and c.idCliente = a.idCliente) AS Quantidade_Cliente from Cliente c;
+  select c.nomeCliente from Cliente c where c.idCliente not in (select a.idCliente from Agendamento a);
+  select T.nomeCliente, T.Quantidade_Funcionario FROM (select c.nomeCliente,(select COUNT(a.idCliente) FROM Agendamento a, Funcionario f where a.idFuncionario = f.idFuncionario and c.idCliente = a.idCliente) as Quantidade_Funcionario from Cliente c group by c.idCliente) T where T.Quantidade_Funcionario > 1;
+ 
+ DELIMITER $$
+
+CREATE PROCEDURE LISTAR_FUNCIONARIOS(IN quantidade int)
+BEGIN
+
+ SELECT * FROM FUNCIONARIO LIMIT quantidade;
+
+END$$
+
+DELIMITER ;
+CALL LISTAR_FUNCIONARIOS(5);
+
+DELIMITER $$
+
+CREATE PROCEDURE ANALISE_LIVROS(OUT NOME VARCHAR(120), IN IDLIVRO INT)
+BEGIN
+
+ SELECT NOMELIVRO INTO NOME FROM LIVRO L WHERE L.IDLIVRO = IDLIVRO;
+ 
+END$$
+
+DELIMITER ;
+
+SET @NOME = "";
+
+CALL ANALISE_LIVROS(@NOME, 5);
+
+SELECT @NOME;
+
+
  
    INSERT INTO Biblioteca (nomeBiblioteca,estadoBiblioteca,cidadeBiblioteca, bairroBiblioteca, ruaBiblioteca)
 VALUES
@@ -182,3 +216,11 @@ VALUES
   (3,3),
   (2,4),
   (1,5);
+  
+  INSERT INTO Agendamento (dataSolicitacaoAgendamento, dataEntregaAgendamento, respostaAgendamento, idFuncionario, idCliente)
+VALUES
+  ("27/06/2022", "30/06/2022","Comodato", 2, 2);
+  
+   INSERT INTO Cliente (nomeCliente,cpfCliente, estadoCliente,cidadeCliente, bairroCliente, ruaCliente)
+VALUES
+  ("Mirandinha", "6485946584","Acre","Rio Branco", "Rolho de Poço", "Ionia de Carvalho");
